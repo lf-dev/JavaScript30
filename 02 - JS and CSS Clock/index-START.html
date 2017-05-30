@@ -80,17 +80,14 @@
 
         const date = new Date();
 
-        const seconds = date.getSeconds();
-        const secondsDegree = ((seconds/60)*360) + 90;
-        secondsHand.style.transform = `rotate(${secondsDegree}deg)`;
+        rotateHand(date.getSeconds(), 60, secondsHand);
+        rotateHand(date.getMinutes(), 60, minutesHand);
+        rotateHand(date.getHours(), 12, hoursHand);
+    }
 
-        const minutes = date.getMinutes();
-        const minutesDegrees = ((minutes/60)*360) + 90;
-        minutesHand.style.transform = `rotate(${minutesDegrees}deg)`;
-
-        const hours = date.getHours();
-        const hoursDegrees = ((hours/12)*360) + 90;
-        hoursHand.style.transform = `rotate(${hoursDegrees}deg)`;
+    function rotateHand(value, divisionFactor, handElement){
+        const degrees = ((value/divisionFactor)*360) + 90;
+        handElement.style.transform = `rotate(${degrees}deg)`;
     }
 
     setInterval(setDate, 1000);
