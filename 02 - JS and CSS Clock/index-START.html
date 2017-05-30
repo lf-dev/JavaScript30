@@ -76,18 +76,27 @@
     const minutesHand = document.querySelector(".min-hand");
     const hoursHand = document.querySelector(".hour-hand");
 
+    const start = new Date();
+
     function setDate() {
 
         const date = new Date();
 
-        rotateHand(date.getSeconds(), 60, secondsHand);
-        rotateHand(date.getMinutes(), 60, minutesHand);
-        rotateHand(date.getHours(), 12, hoursHand);
-    }
+        const elapsedMiliSecs = date.getTime() - start.getTime();
+        const elapsedSecs = elapsedMiliSecs/1000;
+        const elapsedMins = elapsedSecs/60;
+        const elapsedHours = elapsedMins/60;
 
-    function rotateHand(value, divisionFactor, handElement){
-        const degrees = ((value/divisionFactor)*360) + 90;
-        handElement.style.transform = `rotate(${degrees}deg)`;
+        console.log(`${elapsedHours} ${elapsedMins} ${elapsedSecs}`);
+
+        const secondsDegrees = (start.getSeconds() + elapsedSecs)*(360/60) + 90;
+        secondsHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+        const minutesDegrees = (start.getMinutes() + elapsedMins)*(360/60) + 90;
+        minutesHand.style.transform = `rotate(${minutesDegrees}deg)`;
+
+        const hoursDegrees = (start.getHours() + elapsedHours)*(360/12) + 90;
+        hoursHand.style.transform = `rotate(${hoursDegrees}deg)`;
     }
 
     setInterval(setDate, 1000);
