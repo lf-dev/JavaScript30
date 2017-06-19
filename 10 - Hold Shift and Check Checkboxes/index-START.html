@@ -100,40 +100,33 @@
 
 <script>
 
-  const itens = Array.from(document.querySelectorAll('.item'));
+  const checkboxes = Array.from(document.querySelectorAll('.item input'));
   let lastIndex = -1;
 
-  itens.forEach( item => {
-    item.addEventListener('click', function(e) {
-
-      const thisIndex = itens.indexOf(this);
-      const thisInput = this.querySelector('input');
-
-      if(e.shiftKey && lastIndex >= 0){
-
-        const lastInput = itens[lastIndex].querySelector('input');
-        if(lastInput.checked && thisInput.checked) {
-          fillCheckboxes(lastIndex, thisIndex);
-        }
-      }
-
-      lastIndex = thisIndex;
-
-    })
+  checkboxes.forEach( checkbox => {
+    checkbox.addEventListener('click', handleClick);
   });
+
+  function handleClick(e) {
+    const thisIndex = checkboxes.indexOf(this);
+
+    if(e.shiftKey && lastIndex >= 0){
+      if(checkboxes[lastIndex].checked && this.checked) {
+        fillCheckboxes(lastIndex, thisIndex);
+      }
+    }
+
+    lastIndex = thisIndex;
+  }
 
   function fillCheckboxes(from, to) {
 
-    if(to < from){
-      [from, to] = [to, from];
-    }
+    if(to < from) [from, to] = [to, from];
 
     while(from <= to) {
-
-      itens[from].querySelector('input').checked = true;
+      checkboxes[from].checked = true;
       from ++;
     }
-
   }
 
 </script>
