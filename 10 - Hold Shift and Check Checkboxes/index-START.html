@@ -94,11 +94,48 @@
     </div>
     <div class="item">
       <input type="checkbox">
-      <p>Don't forget to tweet your result!</p>
+      <p>Dont forget to tweet your result!</p>
     </div>
   </div>
 
 <script>
+
+  const itens = Array.from(document.querySelectorAll('.item'));
+  let lastIndex = -1;
+
+  itens.forEach( item => {
+    item.addEventListener('click', function(e) {
+
+      const thisIndex = itens.indexOf(this);
+      const thisInput = this.querySelector('input');
+
+      if(e.shiftKey && lastIndex >= 0){
+
+        const lastInput = itens[lastIndex].querySelector('input');
+        if(lastInput.checked && thisInput.checked) {
+          fillCheckboxes(lastIndex, thisIndex);
+        }
+      }
+
+      lastIndex = thisIndex;
+
+    })
+  });
+
+  function fillCheckboxes(from, to) {
+
+    if(to < from){
+      [from, to] = [to, from];
+    }
+
+    while(from <= to) {
+
+      itens[from].querySelector('input').checked = true;
+      from ++;
+    }
+
+  }
+
 </script>
 </body>
 </html>
