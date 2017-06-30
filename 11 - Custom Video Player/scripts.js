@@ -49,4 +49,8 @@ skipButtons.forEach( button => button.addEventListener('click', skip));
 ranges.forEach( range => range.addEventListener('change', handleRangesUpdate));
 ranges.forEach( range => range.addEventListener('mousemove', handleRangesUpdate));
 
+let mousedown = false;
 progress.addEventListener('click', scrub);
+progress.addEventListener('mousedown', () => mousedown = true);
+progress.addEventListener('mouseup', () => mousedown = false);
+progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
