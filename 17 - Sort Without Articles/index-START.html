@@ -44,7 +44,58 @@
   <ul id="bands"></ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  const bandsList = document.querySelector("#bands");
+
+  const bands = [
+  "The Plot in You",
+  "The Devil Wears Prada",
+  "Pierce the Veil",
+  "Norma Jean",
+  "The Bled",
+  "Say Anything",
+  "The Midway State",
+  "We Came as Romans",
+  "Counterparts",
+  "Oh, Sleeper",
+  "A Skylit Drive",
+  "Anywhere But Here",
+  "An Old Dog"
+];
+
+const stopWords = ["the", "an", "a"];
+
+function removeStopWord(str){
+
+  const startWithStopWord = stopWords.some(stopWord => {
+    return str.toLowerCase().startsWith(stopWord + " ");
+  });
+
+  if(startWithStopWord) {
+    const strArray = str.split(" ");
+    strArray.shift();
+    return strArray.join(" ");
+  }else {
+    return str;
+  }
+}
+
+function compare(a, b) {
+
+  const a2 = removeStopWord(a);
+  const b2 = removeStopWord(b);
+
+  return a2.localeCompare(b2);
+
+}
+
+bands.sort(compare);
+
+bandsList.innerHTML = bands.map(band => {
+  return `
+    <li>${band}</li>
+  `;
+}).join("");
+
 
 
 </script>
